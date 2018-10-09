@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<!-- MyBatis配置文件
+	<properties>  
+        <property name="dialect" value="mysql" />  
+    </properties>
+     -->
+    <settings>
+
+		<!-- 配置关闭缓存 -->
+		<setting name="cacheEnabled" value="false" />
+		<!-- 将表字段配置成驼峰形式 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+
+		<!-- 用于提高性能 -->
+		<setting name="defaultExecutorType" value="REUSE" />
+		<!-- 事务超时时间 -->
+		<setting name="defaultStatementTimeout" value="600" />
+
+		<!--<setting name="logImpl" value="LOG4J" />-->
+    </settings> 
+
+	<!-- 别名配置 -->
+	<typeAliases>
+		<package name="com.zwb.ums.model.po" />
+	</typeAliases>
+	<!-- mybatis的sqlMapper.xml文件的配置方式一 -->
+	<!-- 方式二： 在spring boot的配置文件中配置 -->
+	<!--<mappers>-->
+		<!--<mapper resource="mapper/user.xml"/>-->
+
+
+	<!--</mappers>-->
+	
+</configuration>

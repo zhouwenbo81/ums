@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Spring Boot Hello</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+</head>
+<body>
+	<span>这是我的Spring Boot</span>
+
+	<div class="welcomeWrap" id="welcomeWrap">
+		<div class="welcomeCont">
+			<p>欢迎使用<b>UMS管理中心</b></p>
+		</div>
+	</div>
+
+	<div class="welcomeCont" id="mesg">
+		<span>你有新的消息！</span>
+		<span>你有新的消息！</span>
+	</div>
+
+	<script type="text/javascript">
+        var websocket = null;
+        if('WebSocket' in window) {
+            websocket = new WebSocket('ws://localhost:8085/webSocket');
+        }else {
+            alert('该浏览器不支持websocket!');
+        }
+
+        websocket.onopen = function (event) {
+            console.log('建立连接');
+        }
+
+        websocket.onclose = function (event) {
+            console.log('连接关闭');
+        }
+        websocket.onmessage = function (event) {
+            console.log('收到消息:'+event.data);
+            //弹框提醒
+			alert("收到新的消息:"+event.data);
+        }
+        websocket.onerror = function (event) {
+            alert('websocket通信发生错误！');
+        }
+
+        //
+        window.onbeforeunload = function () {
+            websocket.close();
+        }
+
+	</script>
+</body>
+</html>

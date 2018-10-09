@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zwb.ums.mapper.UmsuserMapper" >
+  <resultMap id="BaseResultMap" type="com.zwb.ums.model.po.Umsuser" >
+    <result column="id" property="id" jdbcType="CHAR" />
+    <result column="user_num" property="userNum" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="CHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="secret_key" property="secretKey" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_ip" property="createIp" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="is_phone" property="isPhone" jdbcType="CHAR" />
+    <result column="is_email" property="isEmail" jdbcType="CHAR" />
+    <result column="is_fingerprint" property="isFingerprint" jdbcType="CHAR" />
+    <result column="reistered_app" property="reisteredApp" jdbcType="INTEGER" />
+    <result column="fingerprint_login" property="fingerprintLogin" jdbcType="CHAR" />
+    <result column="last_logintime" property="lastLogintime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_num, user_type, username, mobile, email, nickname, password, secret_key,
+    create_date, create_ip, status, is_phone, is_email, is_fingerprint, reistered_app,fingerprint_login, last_logintime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zwb.ums.model.po.Umsuser" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_umsuser
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zwb.ums.model.po.Umsuser" >
+    delete from t_umsuser
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zwb.ums.model.po.Umsuser" >
+    insert into t_umsuser (id, user_num, user_type, 
+      username, mobile, email, 
+      nickname, password, secret_key, 
+      create_date, create_ip, status, 
+      is_phone, is_email, is_fingerprint, 
+      reistered_app, fingerprint_login, last_logintime
+      )
+    values (#{id,jdbcType=CHAR}, #{userNum,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR}, 
+      #{username,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{secretKey,jdbcType=CHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createIp,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{isPhone,jdbcType=CHAR}, #{isEmail,jdbcType=CHAR}, #{isFingerprint,jdbcType=CHAR}, 
+      #{reisteredApp,jdbcType=INTEGER}, #{fingerprintLogin,jdbcType=CHAR}, #{lastLogintime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zwb.ums.model.po.Umsuser" >
+    insert into t_umsuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userNum != null" >
+        user_num,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="secretKey != null" >
+        secret_key,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createIp != null" >
+        create_ip,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isPhone != null" >
+        is_phone,
+      </if>
+      <if test="isEmail != null" >
+        is_email,
+      </if>
+      <if test="isFingerprint != null" >
+        is_fingerprint,
+      </if>
+      <if test="reisteredApp != null" >
+        reistered_app,
+      </if>
+      <if test="fingerprintLogin != null" >
+        fingerprint_login,
+      </if>
+      <if test="lastLogintime != null" >
+        last_logintime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="userNum != null" >
+        #{userNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null" >
+        #{secretKey,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null" >
+        #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="isPhone != null" >
+        #{isPhone,jdbcType=CHAR},
+      </if>
+      <if test="isEmail != null" >
+        #{isEmail,jdbcType=CHAR},
+      </if>
+      <if test="isFingerprint != null" >
+        #{isFingerprint,jdbcType=CHAR},
+      </if>
+      <if test="reisteredApp != null" >
+        #{reisteredApp,jdbcType=INTEGER},
+      </if>
+      <if test="fingerprintLogin != null" >
+        #{fingerprintLogin,jdbcType=CHAR},
+      </if>
+      <if test="lastLogintime != null" >
+        #{lastLogintime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zwb.ums.model.po.Umsuser" >
+    update t_umsuser
+    <set >
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null" >
+        secret_key = #{secretKey,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null" >
+        create_ip = #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="isPhone != null" >
+        is_phone = #{isPhone,jdbcType=CHAR},
+      </if>
+      <if test="isEmail != null" >
+        is_email = #{isEmail,jdbcType=CHAR},
+      </if>
+      <if test="isFingerprint != null" >
+        is_fingerprint = #{isFingerprint,jdbcType=CHAR},
+      </if>
+      <if test="reisteredApp != null" >
+        reistered_app = #{reisteredApp,jdbcType=INTEGER},
+      </if>
+      <if test="fingerprintLogin != null" >
+        fingerprint_login = #{fingerprintLogin,jdbcType=CHAR},
+      </if>
+      <if test="lastLogintime != null" >
+        last_logintime = #{lastLogintime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zwb.ums.model.po.Umsuser" >
+    update t_umsuser
+    set user_type = #{userType,jdbcType=CHAR},
+      username = #{username,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      secret_key = #{secretKey,jdbcType=CHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_ip = #{createIp,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      is_phone = #{isPhone,jdbcType=CHAR},
+      is_email = #{isEmail,jdbcType=CHAR},
+      is_fingerprint = #{isFingerprint,jdbcType=CHAR},
+      reistered_app = #{reisteredApp,jdbcType=INTEGER},
+      fingerprint_login = #{fingerprintLogin,jdbcType=CHAR},
+      last_logintime = #{lastLogintime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <!-- 新增开始 -->
+
+  <sql id="sql_limit">
+    limit #{splitPage.startRow,jdbcType=INTEGER},#{splitPage.pageSize,jdbcType=INTEGER}
+  </sql>
+
+  <sql id="sql_where" >
+    <if test="userType != null and userType != ''">
+      and user_type = #{userType,jdbcType=CHAR}
+    </if>
+    <if test="userNum != null and userNum != ''">
+      and user_num = #{userNum,jdbcType=VARCHAR}
+    </if>
+    <if test="mobile != null and mobile != ''">
+      and mobile like CONCAT(#{mobile},'%')
+    </if>
+    <if test="email != null and email != ''">
+      and email like CONCAT(#{email},'%')
+    </if>
+    <if test="keyWords != null and keyWords != ''" >
+      and ( username like CONCAT(#{keyWords},'%')
+      or user_num like CONCAT(#{keyWords},'%')
+      )
+    </if>
+    <if test="status != null and status != ''">
+      and status = #{status,jdbcType=CHAR}
+    </if>
+  </sql>
+
+  <!-- 查询所有内部用户数量 -->
+  <select id="selectAllInsideUserCount" resultType="INTEGER" parameterType="com.zwb.ums.model.vo.UmsuserVO">
+    select count(*) from t_umsuser
+    <where>
+      (user_type = '03' or user_type = '04')
+      <include refid="sql_where" />
+    </where>
+  </select>
+
+  <!-- 分页查询所有内部用户 -->
+  <select id="selectAllInsideUserList" resultMap="BaseResultMap" parameterType="com.zwb.ums.model.vo.UmsuserVO">
+    select
+    <include refid="Base_Column_List" />
+    from t_umsuser
+    <where>
+      status !='10'
+      <include refid="sql_where" />
+      and (user_type = '03' or user_type = '04')
+    </where>
+    order by create_date desc
+    <include refid="sql_limit" />
+  </select>
+
+  <!-- 查询所有内部用户（公司职员/管理员） -->
+  <select id="selectAllInsideUser" resultMap="BaseResultMap" >
+    select id, user_num, username, mobile, nickname, status
+    from t_umsuser where (user_type ='03' or user_type ='04') order by create_date;
+  </select>
+
+  <!-- 查询内部用户详情信息 -->
+  <select id="selectInsideUserByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select id, user_num, user_type, username, mobile, nickname, password, secret_key, create_date, last_logintime, create_ip,
+    status, is_phone, is_email, reistered_app from t_umsuser
+    where (user_type = '03' or user_type = '04') and id = #{id,jdbcType=CHAR}
+  </select>
+
+
+
+  <!-- 新增结束-->
+</mapper>

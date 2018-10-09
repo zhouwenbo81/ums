@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+<mapper namespace="com.zwb.ums.mapper.JobAndTriggerMapper">
+
+	<resultMap id="BaseResultMap" type="com.zwb.ums.model.po.JobAndTrigger" >
+		<result column="JOB_NAME" property="JOB_NAME" jdbcType="VARCHAR" />
+		<result column="JOB_GROUP" property="JOB_GROUP" jdbcType="VARCHAR" />
+		<result column="JOB_CLASS_NAME" property="JOB_CLASS_NAME" jdbcType="VARCHAR" />
+		<result column="TRIGGER_NAME" property="TRIGGER_NAME" jdbcType="VARCHAR" />
+		<result column="TRIGGER_GROUP" property="TRIGGER_GROUP" jdbcType="VARCHAR" />
+		<result column="CRON_EXPRESSION" property="CRON_EXPRESSION" jdbcType="VARCHAR" />
+		<result column="TIME_ZONE_ID" property="TIME_ZONE_ID" jdbcType="VARCHAR" />
+
+	</resultMap>
+    
+    <select id="getJobAndTriggerDetails" resultMap="BaseResultMap">
+			SELECT
+				qrtz_job_details.JOB_NAME,
+				qrtz_job_details.JOB_GROUP,
+				qrtz_job_details.JOB_CLASS_NAME,
+				qrtz_triggers.TRIGGER_NAME,
+				qrtz_triggers.TRIGGER_GROUP,
+				qrtz_cron_triggers.CRON_EXPRESSION,
+				qrtz_cron_triggers.TIME_ZONE_ID
+			FROM
+				qrtz_job_details
+			JOIN qrtz_triggers
+			JOIN qrtz_cron_triggers ON qrtz_job_details.JOB_NAME = qrtz_triggers.JOB_NAME
+			AND qrtz_triggers.TRIGGER_NAME = qrtz_cron_triggers.TRIGGER_NAME
+			AND qrtz_triggers.TRIGGER_GROUP = qrtz_cron_triggers.TRIGGER_GROUP
+    </select>
+    
+</mapper>

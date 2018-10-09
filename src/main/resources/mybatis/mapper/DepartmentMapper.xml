@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zwb.ums.mapper.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.zwb.ums.model.po.Department" >
+    <id column="department_id" property="departmentId" jdbcType="CHAR" />
+    <result column="department_num" property="departmentNum" jdbcType="CHAR" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="department_state" property="departmentState" jdbcType="CHAR" />
+    <result column="distract_id" property="distractId" jdbcType="CHAR" />
+    <result column="area_id" property="areaId" jdbcType="CHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="department_remark" property="departmentRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    department_id, department_num, department_name, department_state, distract_id, area_id, 
+    sort_num, create_time, department_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_department
+    where department_id = #{departmentId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_department
+    where department_id = #{departmentId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zwb.ums.model.po.Department" >
+    insert into t_department (department_id, department_num, department_name, 
+      department_state, distract_id, area_id, 
+      sort_num, create_time, department_remark
+      )
+    values (#{departmentId,jdbcType=CHAR}, #{departmentNum,jdbcType=CHAR}, #{departmentName,jdbcType=VARCHAR}, 
+      #{departmentState,jdbcType=CHAR}, #{distractId,jdbcType=CHAR}, #{areaId,jdbcType=CHAR}, 
+      #{sortNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{departmentRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zwb.ums.model.po.Department" >
+    insert into t_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentNum != null" >
+        department_num,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="departmentState != null" >
+        department_state,
+      </if>
+      <if test="distractId != null" >
+        distract_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="sortNum != null" >
+        sort_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="departmentRemark != null" >
+        department_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=CHAR},
+      </if>
+      <if test="departmentNum != null" >
+        #{departmentNum,jdbcType=CHAR},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentState != null" >
+        #{departmentState,jdbcType=CHAR},
+      </if>
+      <if test="distractId != null" >
+        #{distractId,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=CHAR},
+      </if>
+      <if test="sortNum != null" >
+        #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentRemark != null" >
+        #{departmentRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zwb.ums.model.po.Department" >
+    update t_department
+    <set >
+      <if test="departmentNum != null" >
+        department_num = #{departmentNum,jdbcType=CHAR},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentState != null" >
+        department_state = #{departmentState,jdbcType=CHAR},
+      </if>
+      <if test="distractId != null" >
+        distract_id = #{distractId,jdbcType=CHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=CHAR},
+      </if>
+      <if test="sortNum != null" >
+        sort_num = #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentRemark != null" >
+        department_remark = #{departmentRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where department_id = #{departmentId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zwb.ums.model.po.Department" >
+    update t_department
+    set department_num = #{departmentNum,jdbcType=CHAR},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      department_state = #{departmentState,jdbcType=CHAR},
+      distract_id = #{distractId,jdbcType=CHAR},
+      area_id = #{areaId,jdbcType=CHAR},
+      sort_num = #{sortNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      department_remark = #{departmentRemark,jdbcType=VARCHAR}
+    where department_id = #{departmentId,jdbcType=CHAR}
+  </update>
+  <!--新增开始 -->
+  <sql id="sql_count">
+    select count(*)
+  </sql>
+  <sql id="sql_select">
+    select a.department_id, a.department_num, a.department_name, a.department_state, a.distract_id, a.area_id,
+    a.sort_num, a.create_time, a.department_remark
+  </sql>
+  <sql id="sql_where">
+    from t_department a LEFT JOIN t_relation b ON a.department_id = b.department_id AND b.relation_type = '00'
+    <where>
+      a.department_state != '10'
+      <if test="departmentName != null and departmentName != ''" >
+        AND a.department_name like CONCAT('%',#{departmentName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="departmentState != null and departmentState != ''" >
+        and a.department_state = #{departmentState,jdbcType=CHAR}
+      </if>
+      <if test="companyId != null and companyId != ''" >
+        and b.company_id = #{companyId,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by a.create_time desc
+  </sql>
+  <sql id="sql_limit">
+    limit #{splitPage.startRow,jdbcType=INTEGER},#{splitPage.pageSize,jdbcType=INTEGER}
+  </sql>
+  <select id="selectAllObj" resultMap="BaseResultDepartmentMap" parameterType="com.zwb.ums.model.vo.DepartmentVO">
+    <include refid="sql_select"/>
+    <include refid="sql_where"/>
+    <include refid="sql_limit"/>
+  </select>
+  <select id="selectAllObjCount" resultType="INTEGER" parameterType="com.zwb.ums.model.vo.DepartmentVO">
+    <include refid="sql_count"/>
+    <include refid="sql_where"/>
+  </select>
+  <select id="selectAllDepartment" resultMap="BaseResultMap" parameterType="com.zwb.ums.model.po.Department">
+    select
+    <include refid="Base_Column_List" />
+    from t_department
+    <where>
+      department_state != '10'
+      <if test="departmentState != null and departmentState != ''" >
+        and department_state = #{departmentState,jdbcType=CHAR}
+      </if>
+      <if test="departmentState == null or departmentState == ''" >
+        and departmentState = '01'
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <resultMap id="BaseResultDepartmentMap" extends="BaseResultMap" type="com.zwb.ums.model.po.Department" >
+    <association property="company" column="department_id" javaType="com.zwb.ums.model.po.Company" select="com.zwb.ums.mapper.CompanyMapper.selectCompanyByDepartmentId" />
+  </resultMap>
+
+  <resultMap id="DeptRelationResultMap" extends="BaseResultMap" type="com.zwb.ums.model.po.Department" >
+    <!--<result column="company_id" property="companyId" jdbcType="VARCHAR" />-->
+    <result column="relation_id" property="relationId" jdbcType="VARCHAR" />
+    <association property="company" column="department_id" javaType="com.zwb.ums.model.po.Company" select="com.zwb.ums.mapper.CompanyMapper.selectCompanyByDepartmentId" />
+  </resultMap>
+  <!-- 查询部门信息详情 -->
+  <select id="selectDepartmentById" resultMap="DeptRelationResultMap" parameterType="java.lang.String">
+    select
+    a.department_id, a.department_num, a.department_name, a.department_state, a.distract_id, a.area_id,
+    a.sort_num, a.create_time, a.department_remark,b.relation_id,b.company_id
+    from t_department a
+    LEFT JOIN t_relation b on a.department_id =b.department_id and b.relation_type='00'
+    LEFT JOIN t_company c on c.company_id=b.company_id
+    where a.department_id = #{departmentId,jdbcType=CHAR}
+  </select>
+
+  <!-- 根据公司Id和关联类型查询该公司的所有部门 -->
+  <select id="selectByCompanyIdAndRelationType" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT a.department_name, a.department_id FROM t_department a LEFT JOIN t_relation b ON a.department_id = b.department_id
+    WHERE b.relation_type = '00' and b.company_id = #{companyId,jdbcType=CHAR}
+  </select>
+
+  <!-- 根据部门信息查询部门 -->
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.zwb.ums.model.vo.DepartmentVO" >
+    select
+    a.department_num, a.department_name, a.department_state, a.distract_id, a.area_id,
+    a.sort_num, a.create_time, a.department_remark
+    from t_department a
+    LEFT JOIN t_relation b
+    ON a.department_id =b.department_id and b.relation_type ='00'
+    <where>
+      <if test="departmentId != null and departmentId != ''" >
+        a.department_id = #{departmentId,jdbcType=CHAR}
+      </if>
+      <if test="departmentName != null and departmentName != ''" >
+        and a.department_name = #{departmentName,jdbcType=VARCHAR}
+      </if>
+      <if test="departmentState != null and departmentState != ''" >
+        and a.department_state = #{departmentState,jdbcType=CHAR}
+      </if>
+      <if test="distractId != null and distractId != ''" >
+        and a.distract_id = #{distractId,jdbcType=CHAR}
+      </if>
+      <if test="areaId != null and areaId != ''" >
+        and a.area_id = #{areaId,jdbcType=CHAR}
+      </if>
+      <if test="companyId != null and companyId != ''" >
+        and b.company_id = #{companyId,jdbcType=CHAR}
+      </if>
+    </where>
+  </select>
+
+  <!-- 根据职位Id查询该职位的所属部门 -->
+  <select id="selectDepartmentByEmploymentId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select a.department_id, a.department_name
+    from t_department a
+    LEFT JOIN t_relation b
+    ON a.department_id = b.department_id and b.relation_type = '01'
+    where b.employment_id = #{employmentId,jdbcType=CHAR}
+  </select>
+  <!-- 根据用户Id查询该用户所属部门 -->
+  <!--<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">-->
+  <!--select-->
+  <!--DISTINCT a.department_id, a.department_name-->
+  <!--from t_department a left join t_relation b on a.department_id = b.department_id-->
+  <!--where b.user_id = #{userId,jdbcType=CHAR} and b.relation_type in (02, 03)-->
+  <!--</select>-->
+
+  <!-- 部门信息与下属职位信息映射-->
+  <!--<resultMap id="DepartmentResultMap" type="cn.sjt.ums.model.po.Department" >-->
+    <!--<id column="department_id" property="departmentId" jdbcType="CHAR" />-->
+    <!--<result column="department_name" property="departmentName" jdbcType="VARCHAR" />-->
+    <!--<collection property="employments" column="{userId=user_id,companyId=company_id,departmentId=department_id}" select="cn.sjt.ums.mapper.EmploymentMapper.selectUserEmploymentInfo" />-->
+  <!--</resultMap>-->
+
+  <!-- 根据用户Id和公司Id查询该用户所属部门信息 -->
+  <!--<select id="selectByUserIdAndCompanyId" resultMap="DepartmentResultMap" parameterType="java.util.Map">-->
+    <!--select-->
+    <!--DISTINCT a.department_id, a.department_name,b.company_id,b.user_id-->
+    <!--from t_department a left join t_relation b on a.department_id = b.department_id-->
+    <!--where b.user_id = #{userId,jdbcType=CHAR} and b.relation_type in (02, 03)-->
+    <!--and b.company_id = #{companyId,jdbcType=CHAR}-->
+  <!--</select>-->
+
+
+  <!--新增结束 -->
+</mapper>

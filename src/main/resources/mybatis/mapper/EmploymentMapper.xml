@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zwb.ums.mapper.EmploymentMapper" >
+  <resultMap id="BaseResultMap" type="com.zwb.ums.model.po.Employment" >
+    <id column="employment_id" property="employmentId" jdbcType="CHAR" />
+    <result column="employment_name" property="employmentName" jdbcType="VARCHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="employment_state" property="employmentState" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    employment_id, employment_name, sort_num, employment_state, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_employment
+    where employment_id = #{employmentId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_employment
+    where employment_id = #{employmentId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zwb.ums.model.po.Employment" >
+    insert into t_employment (employment_id, employment_name, sort_num, 
+      employment_state, create_time)
+    values (#{employmentId,jdbcType=CHAR}, #{employmentName,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER}, 
+      #{employmentState,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zwb.ums.model.po.Employment" >
+    insert into t_employment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="employmentId != null" >
+        employment_id,
+      </if>
+      <if test="employmentName != null" >
+        employment_name,
+      </if>
+      <if test="sortNum != null" >
+        sort_num,
+      </if>
+      <if test="employmentState != null" >
+        employment_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="employmentId != null" >
+        #{employmentId,jdbcType=CHAR},
+      </if>
+      <if test="employmentName != null" >
+        #{employmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNum != null" >
+        #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="employmentState != null" >
+        #{employmentState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zwb.ums.model.po.Employment" >
+    update t_employment
+    <set >
+      <if test="employmentName != null" >
+        employment_name = #{employmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNum != null" >
+        sort_num = #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="employmentState != null" >
+        employment_state = #{employmentState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where employment_id = #{employmentId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zwb.ums.model.po.Employment" >
+    update t_employment
+    set employment_name = #{employmentName,jdbcType=VARCHAR},
+      sort_num = #{sortNum,jdbcType=INTEGER},
+      employment_state = #{employmentState,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where employment_id = #{employmentId,jdbcType=CHAR}
+  </update>
+  <!--新增开始 -->
+  <!-- 新增开始 -->
+  <sql id="sql_count">
+    select count(*)
+  </sql>
+  <sql id="sql_select">
+    select a.employment_id, a.employment_name, a.sort_num, a.employment_state, a.create_time
+  </sql>
+  <sql id="sql_where">
+    from t_employment a LEFT JOIN t_relation b ON a.employment_id = b.employment_id AND b.relation_type = '01'
+    <where>
+      a.employment_state !='10'
+      <if test="employmentName != null and employmentName != ''" >
+        and a.employment_name like CONCAT('%',#{employmentName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="employmentState != null and employmentState != ''" >
+        and a.employment_state = #{employmentState,jdbcType=CHAR}
+      </if>
+      <if test="companyId != null and companyId != ''" >
+        and b.company_id = #{companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="departmentId != null and departmentId != ''" >
+        and b.department_id = #{departmentId,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by a.create_time desc
+  </sql>
+  <sql id="sql_limit">
+    limit #{splitPage.startRow,jdbcType=INTEGER},#{splitPage.pageSize,jdbcType=INTEGER}
+  </sql>
+  <select id="selectAllObj" resultMap="BaseResultEmploymentMap" parameterType="com.zwb.ums.model.vo.EmploymentVO">
+    <include refid="sql_select"/>
+    <include refid="sql_where"/>
+    <include refid="sql_limit"/>
+  </select>
+  <select id="selectAllObjCount" resultType="INTEGER" parameterType="com.zwb.ums.model.vo.EmploymentVO">
+    <include refid="sql_count"/>
+    <include refid="sql_where"/>
+  </select>
+  <select id="selectAllEmployment" resultMap="BaseResultMap" parameterType="com.zwb.ums.model.po.Employment">
+    select
+    <include refid="Base_Column_List" />
+    from t_employment
+    <where>
+      employment_state ='01'
+      <if test="employmentName != null and employmentName != ''" >
+        and employment_name like CONCAT('%',#{employmentName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="employmentId != null and employmentId != ''" >
+        and employment_id = #{employmentId,jdbcType=CHAR}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <resultMap id="BaseResultEmploymentMap" extends="BaseResultMap" type="com.zwb.ums.model.vo.EmploymentVO" >
+    <association property="company" column="employment_id" javaType="com.zwb.ums.model.po.Company" select="com.zwb.ums.mapper.CompanyMapper.selectCompanyByEmploymentId" />
+    <association property="department" column="employment_id" javaType="com.zwb.ums.model.po.Department" select="com.zwb.ums.mapper.DepartmentMapper.selectDepartmentByEmploymentId" />
+  </resultMap>
+
+  <resultMap id="EmploymentRelationResultMap" extends="BaseResultMap" type="com.zwb.ums.model.vo.EmploymentVO" >
+    <result column="relation_id" property="relationId" jdbcType="VARCHAR" />
+    <association property="company" column="employment_id" javaType="com.zwb.ums.model.po.Company" select="com.zwb.ums.mapper.CompanyMapper.selectCompanyByEmploymentId" />
+    <association property="department" column="employment_id" javaType="com.zwb.ums.model.po.Department" select="com.zwb.ums.mapper.DepartmentMapper.selectDepartmentByEmploymentId" />
+  </resultMap>
+
+  <!-- 查询职位信息详情 -->
+  <select id="selectEmploymentById" resultMap="EmploymentRelationResultMap" parameterType="java.lang.String">
+    select
+    a.employment_id, a.employment_name, a.sort_num, a.employment_state, a.create_time,b.relation_id
+    from t_employment a
+    LEFT JOIN t_relation b on a.employment_id = b.employment_id and b.relation_type='01'
+    LEFT JOIN t_department c ON b.department_id = c.department_id
+    LEFT JOIN t_company d ON b.company_id = d.company_id
+    where a.employment_id = #{employmentId,jdbcType=CHAR}
+  </select>
+
+  <!-- 根据部门Id和关联类型查询该部门的所有职位 -->
+  <select id="selectByDepartmentIdAndRelationType" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT a.employment_id, a.employment_name FROM t_employment a LEFT JOIN t_relation b ON a.employment_id = b.employment_id
+    WHERE b.relation_type = '01' and b.department_id = #{departmentId,jdbcType=CHAR}
+  </select>
+
+
+  <!--新增结束 -->
+</mapper>

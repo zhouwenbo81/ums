@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zwb.ums.mapper.MoodMapper" >
+  <resultMap id="BaseResultMap" type="com.zwb.ums.model.po.Mood" >
+    <id column="mood_id" property="moodId" jdbcType="VARCHAR" />
+    <result column="mood_title" property="moodTitle" jdbcType="VARCHAR" />
+    <result column="mood_content" property="moodContent" jdbcType="VARCHAR" />
+    <result column="mood_year" property="moodYear" jdbcType="INTEGER" />
+    <result column="mood_month" property="moodMonth" jdbcType="INTEGER" />
+    <result column="mood_day" property="moodDay" jdbcType="INTEGER" />
+    <result column="mood_state" property="moodState" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mood_id, mood_title, mood_content, mood_year, mood_month, mood_day, mood_state, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mood
+    where mood_id = #{moodId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_mood
+    where mood_id = #{moodId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zwb.ums.model.po.Mood" >
+    insert into t_mood (mood_id, mood_title, mood_content, 
+      mood_year, mood_month, mood_day, 
+      mood_state, create_time)
+    values (#{moodId,jdbcType=VARCHAR}, #{moodTitle,jdbcType=VARCHAR}, #{moodContent,jdbcType=VARCHAR}, 
+      #{moodYear,jdbcType=INTEGER}, #{moodMonth,jdbcType=INTEGER}, #{moodDay,jdbcType=INTEGER}, 
+      #{moodState,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zwb.ums.model.po.Mood" >
+    insert into t_mood
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moodId != null" >
+        mood_id,
+      </if>
+      <if test="moodTitle != null" >
+        mood_title,
+      </if>
+      <if test="moodContent != null" >
+        mood_content,
+      </if>
+      <if test="moodYear != null" >
+        mood_year,
+      </if>
+      <if test="moodMonth != null" >
+        mood_month,
+      </if>
+      <if test="moodDay != null" >
+        mood_day,
+      </if>
+      <if test="moodState != null" >
+        mood_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moodId != null" >
+        #{moodId,jdbcType=VARCHAR},
+      </if>
+      <if test="moodTitle != null" >
+        #{moodTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="moodContent != null" >
+        #{moodContent,jdbcType=VARCHAR},
+      </if>
+      <if test="moodYear != null" >
+        #{moodYear,jdbcType=INTEGER},
+      </if>
+      <if test="moodMonth != null" >
+        #{moodMonth,jdbcType=INTEGER},
+      </if>
+      <if test="moodDay != null" >
+        #{moodDay,jdbcType=INTEGER},
+      </if>
+      <if test="moodState != null" >
+        #{moodState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zwb.ums.model.po.Mood" >
+    update t_mood
+    <set >
+      <if test="moodTitle != null" >
+        mood_title = #{moodTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="moodContent != null" >
+        mood_content = #{moodContent,jdbcType=VARCHAR},
+      </if>
+      <if test="moodYear != null" >
+        mood_year = #{moodYear,jdbcType=INTEGER},
+      </if>
+      <if test="moodMonth != null" >
+        mood_month = #{moodMonth,jdbcType=INTEGER},
+      </if>
+      <if test="moodDay != null" >
+        mood_day = #{moodDay,jdbcType=INTEGER},
+      </if>
+      <if test="moodState != null" >
+        mood_state = #{moodState,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where mood_id = #{moodId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zwb.ums.model.po.Mood" >
+    update t_mood
+    set mood_title = #{moodTitle,jdbcType=VARCHAR},
+      mood_content = #{moodContent,jdbcType=VARCHAR},
+      mood_year = #{moodYear,jdbcType=INTEGER},
+      mood_month = #{moodMonth,jdbcType=INTEGER},
+      mood_day = #{moodDay,jdbcType=INTEGER},
+      mood_state = #{moodState,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where mood_id = #{moodId,jdbcType=VARCHAR}
+  </update>
+  <!-- 新增开始 -->
+  <sql id="sql_count">
+		select count(*)
+  </sql>
+
+  <sql id="sql_select">
+	select mood_id, mood_title, mood_content, mood_year, mood_month, mood_day, mood_state, create_time
+  </sql>
+	
+	<sql id="sql_where">
+		from t_mood
+		<where>
+			mood_state !='10'
+			<if test="moodTitle != null and moodTitle != '' ">
+				and mood_title like CONCAT('%',#{moodTitle,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="moodState != null and moodState != ''" >
+		        and mood_state = #{moodState,jdbcType=CHAR}
+		     </if>
+		</where>
+		order by mood_year desc,mood_month desc,mood_day desc,create_time desc
+	</sql>
+	<sql id="sql_limit">
+		limit #{splitPage.startRow,jdbcType=INTEGER},#{splitPage.pageSize,jdbcType=INTEGER}
+	</sql>
+
+	<select id="selectAllObj" resultMap="BaseResultMap" parameterType="com.zwb.ums.model.vo.MoodVO">
+		<include refid="sql_select" />
+		<include refid="sql_where" />
+		<include refid="sql_limit" />
+	</select>
+
+	<select id="selectAllObjCount" resultType="INTEGER" parameterType="com.zwb.ums.model.vo.MoodVO">
+		<include refid="sql_count" />
+		<include refid="sql_where" />
+	</select>
+	
+    <select id="selectAll" resultMap="BaseResultMap">
+      select 
+      <include refid="Base_Column_List" />
+      from t_mood
+      where mood_state = '01'
+      order by create_time desc
+    </select>
+    
+    <!-- 查询心情按照年份的分组 -->
+    <select id="selectAllYearObj" resultMap="BaseResultMap" >
+		<include refid="sql_select" />
+		from t_mood GROUP BY mood_year ORDER BY mood_year desc
+	</select>
+
+	<!-- 查找按照指定年份并按照月份的分组 -->
+	<select id="selectAllMonthObj" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		<include refid="sql_select" />
+		from t_mood where mood_year = #{moodYear,jdbcType=INTEGER} GROUP BY mood_month ORDER BY mood_month desc
+	</select>
+	
+	<!-- 查找指定年份下指定月指定日的心情信息列表 -->
+	<select id="selectAllMoodList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select * from t_mood where mood_year = #{0} and mood_month = #{1} ORDER BY mood_month desc,mood_day desc,create_time desc
+	</select>
+  
+  
+  <!-- 新增结束 -->
+</mapper>

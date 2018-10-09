@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zwb.ums.mapper.RelationMapper" >
+  <resultMap id="BaseResultMap" type="com.zwb.ums.model.po.Relation" >
+    <id column="relation_id" property="relationId" jdbcType="CHAR" />
+    <result column="company_id" property="companyId" jdbcType="CHAR" />
+    <result column="department_id" property="departmentId" jdbcType="CHAR" />
+    <result column="employment_id" property="employmentId" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="relation_type" property="relationType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    relation_id, company_id, department_id, employment_id, user_id, relation_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_relation
+    where relation_id = #{relationId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_relation
+    where relation_id = #{relationId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zwb.ums.model.po.Relation" >
+    insert into t_relation (relation_id, company_id, department_id, 
+      employment_id, user_id, relation_type
+      )
+    values (#{relationId,jdbcType=CHAR}, #{companyId,jdbcType=CHAR}, #{departmentId,jdbcType=CHAR}, 
+      #{employmentId,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{relationType,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zwb.ums.model.po.Relation" >
+    insert into t_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="relationId != null" >
+        relation_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="employmentId != null" >
+        employment_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="relationType != null" >
+        relation_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="relationId != null" >
+        #{relationId,jdbcType=CHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=CHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=CHAR},
+      </if>
+      <if test="employmentId != null" >
+        #{employmentId,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="relationType != null" >
+        #{relationType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zwb.ums.model.po.Relation" >
+    update t_relation
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=CHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=CHAR},
+      </if>
+      <if test="employmentId != null" >
+        employment_id = #{employmentId,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="relationType != null" >
+        relation_type = #{relationType,jdbcType=CHAR},
+      </if>
+    </set>
+    where relation_id = #{relationId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zwb.ums.model.po.Relation" >
+    update t_relation
+    set company_id = #{companyId,jdbcType=CHAR},
+      department_id = #{departmentId,jdbcType=CHAR},
+      employment_id = #{employmentId,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=CHAR},
+      relation_type = #{relationType,jdbcType=CHAR}
+    where relation_id = #{relationId,jdbcType=CHAR}
+  </update>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.zwb.ums.model.po.Relation" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_relation
+    <where>
+      <if test="companyId != null and companyId != ''" >
+        company_id = #{companyId,jdbcType=CHAR}
+      </if>
+      <if test="departmentId != null and departmentId != ''" >
+	    and department_id = #{departmentId,jdbcType=CHAR}
+      </if>
+      <if test="employmentId != null and employmentId != ''" >
+        and employment_id = #{employmentId,jdbcType=CHAR}
+      </if>
+      <if test="userId != null and userId != ''" >
+	    and user_id = #{userId,jdbcType=CHAR}
+      </if>
+      <if test="relationType != null and relationType != ''" >
+	    and relation_type = #{relationType,jdbcType=CHAR}
+      </if>
+    </where>
+  </select>
+  
+  <!-- 根据用户Id查询该用户的关联记录 -->
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select m.*
+	from (
+	  select
+	  <include refid="Base_Column_List" />
+	  from t_relation
+	  where relation_type in ('02', '03') and user_id = #{userId,jdbcType=CHAR}
+	  order by employment_id desc
+	) m
+	group by m.company_id, m.department_id, m.user_id
+  </select>
+  
+  
+</mapper>
